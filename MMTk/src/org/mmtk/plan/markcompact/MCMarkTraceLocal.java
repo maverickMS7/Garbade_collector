@@ -27,7 +27,7 @@ import org.vmmagic.unboxed.*;
 public final class MCMarkTraceLocal extends TraceLocal {
 
   /**
-   * @param trace the associated global trace
+   * @param msTrace the associated global msTrace
    */
   public MCMarkTraceLocal(Trace trace) {
     super(MC.SCAN_MARK, trace);
@@ -69,7 +69,7 @@ public final class MCMarkTraceLocal extends TraceLocal {
   }
 
   /**
-   * Will this object move from this point on, during the current trace ?
+   * Will this object move from this point on, during the current msTrace ?
    *
    * @param object The object to query.
    * @return <code>true</code> if the object will not move.

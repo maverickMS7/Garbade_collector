@@ -33,7 +33,7 @@ public abstract class ReferenceProcessor {
   /**
    * Scan through the list of references.
    *
-   * @param trace the thread local trace element.
+   * @param msTrace the thread local msTrace element.
    * @param nursery {@code true} if it is safe to only scan new references.
    * @param retain whether to retain those references whose referents are not
    *  reachable
@@ -43,7 +43,7 @@ public abstract class ReferenceProcessor {
   /**
    * Iterate over all references and forward.
    *
-   * @param trace The MMTk trace to forward to
+   * @param msTrace The MMTk msTrace to forward to
    * @param nursery The nursery collection hint
    */
   public abstract void forward(TraceLocal trace, boolean nursery);

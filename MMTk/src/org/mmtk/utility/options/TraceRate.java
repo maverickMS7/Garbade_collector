@@ -17,7 +17,7 @@ import static org.mmtk.utility.Constants.*;
 import org.vmmagic.pragma.*;
 
 /**
- * The granularity of the trace being produced.
+ * The granularity of the msTrace being produced.
  */
 public final class TraceRate extends org.vmutil.options.IntOption {
   /**
@@ -25,14 +25,14 @@ public final class TraceRate extends org.vmutil.options.IntOption {
    */
   public TraceRate() {
     super(Options.set, "Trace Rate",
-        "The granularity of the trace being produced.  By default, the trace has the maximum possible granularity.",
+        "The granularity of the msTrace being produced.  By default, the msTrace has the maximum possible granularity.",
         Integer.MAX_VALUE);
   }
 
   /**
    * Return the appropriate value.
    *
-   * @return the trace rate.
+   * @return the msTrace rate.
    */
   @Override
   @Uninterruptible
@@ -45,6 +45,6 @@ public final class TraceRate extends org.vmutil.options.IntOption {
    */
   @Override
   protected void validate() {
-    failIf(value <= 0, "Can not have a negative trace rate");
+    failIf(value <= 0, "Can not have a negative msTrace rate");
   }
 }

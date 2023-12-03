@@ -165,7 +165,7 @@ public class RCHeader {
 
   /**
    * @param object an object
-   * @return whether the object been marked by the most recent backup trace
+   * @return whether the object been marked by the most recent backup msTrace
    */
   @Inline
   public static boolean isMarked(ObjectReference object) {

@@ -15,7 +15,7 @@ package org.mmtk.utility;
 import org.vmmagic.unboxed.*;
 
 /**
- * The constants needed when storing events and then generating the trace.
+ * The constants needed when storing events and then generating the msTrace.
  */
 public final class TracingConstants {
   public static final Word TRACE_EXACT_ALLOC = Word.zero();

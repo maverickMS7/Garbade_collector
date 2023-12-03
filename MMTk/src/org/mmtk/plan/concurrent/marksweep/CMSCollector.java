@@ -92,7 +92,7 @@ public class CMSCollector extends ConcurrentCollector {
     return (CMS) VM.activePlan.global();
   }
 
-  /** @return The current trace instance. */
+  /** @return The current msTrace instance. */
   @Override
   public final TraceLocal getCurrentTrace() {
     return trace;

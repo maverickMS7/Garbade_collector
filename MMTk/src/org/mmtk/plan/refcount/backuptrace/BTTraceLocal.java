@@ -28,7 +28,7 @@ import org.vmmagic.unboxed.*;
 public final class BTTraceLocal extends TraceLocal {
 
   /**
-   * @param trace the associated global trace
+   * @param msTrace the associated global msTrace
    */
 public BTTraceLocal(Trace trace) {
     super(trace);
@@ -51,7 +51,7 @@ public BTTraceLocal(Trace trace) {
   }
 
   /**
-   * When we trace a non-root object we do nothing.
+   * When we msTrace a non-root object we do nothing.
    *
    * @param object The object to be traced.
    * @return The new reference to the same object instance.

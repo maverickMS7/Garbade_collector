@@ -19,7 +19,7 @@ import org.vmmagic.pragma.*;
 import org.vmmagic.unboxed.*;
 
 /**
- * This class implements the freeing of large objects during a backup trace.
+ * This class implements the freeing of large objects during a backup msTrace.
  */
 @Uninterruptible
 public final class BTFreeLargeObjectSweeper extends ExplicitLargeObjectSpace.Sweeper {

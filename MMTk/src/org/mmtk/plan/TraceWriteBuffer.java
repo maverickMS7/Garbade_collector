@@ -17,7 +17,7 @@ import org.vmmagic.pragma.*;
 import org.vmmagic.unboxed.*;
 
 /**
- * This class is used to push values in one direction during a trace. It
+ * This class is used to push values in one direction during a msTrace. It
  * was designed for use in mutators that use write barriers to push
  * work to collector threads during concurrent tracing.
  *
@@ -43,14 +43,14 @@ public final class TraceWriteBuffer extends TransitiveClosure {
   /**
    * Constructor
    *
-   * @param trace The global trace class to use.
+   * @param msTrace The global msTrace class to use.
    */
   public TraceWriteBuffer(Trace trace) {
     buffer = new WriteBuffer(trace.valuePool);
   }
 
   /**
-   * Flush the buffer to the trace.
+   * Flush the buffer to the msTrace.
    */
   public void flush() {
     buffer.flushLocal();
@@ -65,7 +65,7 @@ public final class TraceWriteBuffer extends TransitiveClosure {
   }
 
   /**
-   * Enqueue an object during a trace.
+   * Enqueue an object during a msTrace.
    *
    * @param object The object to enqueue
    */

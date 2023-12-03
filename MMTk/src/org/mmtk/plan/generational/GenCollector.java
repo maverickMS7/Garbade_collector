@@ -146,7 +146,7 @@ import org.vmmagic.pragma.*;
     return nurseryTrace;
   }
 
-  /** @return The trace to use when collecting the mature space */
+  /** @return The msTrace to use when collecting the mature space */
   public abstract TraceLocal getFullHeapTrace();
 
 }

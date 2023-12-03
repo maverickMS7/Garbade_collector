@@ -36,7 +36,7 @@ import org.vmmagic.pragma.*;
  * This class also includes functionality to assist allocators with
  * ensuring that requests are aligned according to requests.<p>
  *
- * Failing to handle this properly will lead to very hard to trace bugs
+ * Failing to handle this properly will lead to very hard to msTrace bugs
  * where the allocation that caused a GC or allocations immediately following
  * GC are run incorrectly.<p>
  *

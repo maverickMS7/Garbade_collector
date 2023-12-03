@@ -26,7 +26,7 @@ import org.vmmagic.unboxed.*;
  * and state for the <i>CopyMS</i> plan.<p>
  *
  * Specifically, this class defines <i>CopyMS</i>
- * collection behavior (through <code>trace</code> and
+ * collection behavior (through <code>msTrace</code> and
  * the <code>collectionPhase</code> method), and
  * collection-time allocation into the mature space.
  *
@@ -142,7 +142,7 @@ public class CopyMSCollector extends StopTheWorldCollector {
     return (CopyMS) VM.activePlan.global();
   }
 
-  /** @return The current trace instance. */
+  /** @return The current msTrace instance. */
   @Override
   public final TraceLocal getCurrentTrace() {
     return trace;

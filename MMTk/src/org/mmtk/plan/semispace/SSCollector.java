@@ -28,7 +28,7 @@ import org.vmmagic.pragma.*;
  * semi-space collector.<p>
  *
  * Specifically, this class defines <i>SS</i> collection behavior
- * (through <code>trace</code> and the <code>collectionPhase</code>
+ * (through <code>msTrace</code> and the <code>collectionPhase</code>
  * method), and collection-time allocation (copying of objects).<p>
  *
  * See {@link SS} for an overview of the semi-space algorithm.
@@ -66,7 +66,7 @@ public class SSCollector extends StopTheWorldCollector {
 
   /**
    * Constructor
-   * @param tr The trace to use
+   * @param tr The msTrace to use
    */
   protected SSCollector(SSTraceLocal tr) {
     ss = new CopyLocal();

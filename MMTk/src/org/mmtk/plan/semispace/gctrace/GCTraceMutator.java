@@ -29,7 +29,7 @@ import org.vmmagic.pragma.*;
  * Specifically, this class defines <i>SS</i> mutator-time allocation, write
  * barriers, and per-mutator collection semantics.<p>
  *
- * See {@link GCTrace} for an overview of the GC trace algorithm.
+ * See {@link GCTrace} for an overview of the GC msTrace algorithm.
  *
  * @see SSMutator
  * @see GCTrace
@@ -51,12 +51,12 @@ import org.vmmagic.pragma.*;
   @Inline
   public final void postAlloc(ObjectReference object, ObjectReference typeRef,
       int bytes, int allocator) {
-    /* Make the trace generator aware of the new object. */
+    /* Make the msTrace generator aware of the new object. */
     TraceGenerator.addTraceObject(object, allocator);
 
     super.postAlloc(object, typeRef, bytes, allocator);
 
-    /* Now have the trace process aware of the new allocation. */
+    /* Now have the msTrace process aware of the new allocation. */
     GCTrace.traceInducedGC = TraceGenerator.MERLIN_ANALYSIS;
     TraceGenerator.traceAlloc(allocator == GCTrace.ALLOC_IMMORTAL, object, typeRef, bytes);
     GCTrace.traceInducedGC = false;

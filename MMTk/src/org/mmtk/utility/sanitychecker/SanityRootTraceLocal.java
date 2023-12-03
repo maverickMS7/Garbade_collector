@@ -35,10 +35,10 @@ public final class SanityRootTraceLocal extends TraceLocal {
    */
 
   /**
-   * Copy root values across to the 'real' single-threaded trace that will do
+   * Copy root values across to the 'real' single-threaded msTrace that will do
    * the sanity checking.
    *
-   * @param trace the trace that will do the sanity checking
+   * @param msTrace the msTrace that will do the sanity checking
    */
   @Inline
   public void copyRootValuesTo(TraceLocal trace) {
@@ -86,7 +86,7 @@ public final class SanityRootTraceLocal extends TraceLocal {
   }
 
   /**
-   * Will this object move from this point on, during the current trace ?
+   * Will this object move from this point on, during the current msTrace ?
    *
    * @param object The object to query.
    * @return {@code true} if the object will not move.

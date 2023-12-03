@@ -27,7 +27,7 @@ import org.vmmagic.unboxed.*;
 public final class SSGCspyTraceLocal extends SSTraceLocal {
 
   /**
-   * @param trace the associated global trace
+   * @param msTrace the associated global msTrace
    */
   public SSGCspyTraceLocal(Trace trace) {
     super(trace);
@@ -51,7 +51,7 @@ public final class SSGCspyTraceLocal extends SSTraceLocal {
   }
 
   /**
-   * Will this object move from this point on, during the current trace ?
+   * Will this object move from this point on, during the current msTrace ?
    *
    * @param object The object to query.
    * @return True if the object will not move.

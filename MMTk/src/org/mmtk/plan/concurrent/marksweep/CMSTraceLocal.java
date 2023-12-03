@@ -28,7 +28,7 @@ public final class CMSTraceLocal extends TraceLocal {
 
 
   /**
-   * @param trace the global trace class to use
+   * @param msTrace the global msTrace class to use
    */
   public CMSTraceLocal(Trace trace) {
     super(trace);

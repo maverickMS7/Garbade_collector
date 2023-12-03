@@ -68,7 +68,7 @@ public abstract class ParallelCollector extends CollectorContext {
   }
 
   /**
-   * @return The current trace instance.
+   * @return The current msTrace instance.
    */
   public TraceLocal getCurrentTrace() {
     VM.assertions.fail("Collector has not implemented getCurrentTrace");

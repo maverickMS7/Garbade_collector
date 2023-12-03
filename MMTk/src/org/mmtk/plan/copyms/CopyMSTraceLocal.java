@@ -27,7 +27,7 @@ import org.vmmagic.unboxed.*;
 public final class CopyMSTraceLocal extends TraceLocal {
 
   /**
-   * @param trace the global trace class to use
+   * @param msTrace the global msTrace class to use
    */
   public CopyMSTraceLocal(Trace trace) {
     super(CopyMS.SCAN_COPYMS, trace);

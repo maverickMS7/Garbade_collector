@@ -61,7 +61,7 @@ import org.vmmagic.unboxed.*;
   private static final Word TRACE_BOOT_ALLOC_SIZE = Word.fromIntSignExtend(18);
 
   /*
-   * Debugging and trace reducing constants
+   * Debugging and msTrace reducing constants
    */
   public static final boolean OMIT_ALLOCS = false;
   public static final boolean OMIT_UPDATES = false;

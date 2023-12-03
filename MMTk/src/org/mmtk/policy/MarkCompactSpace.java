@@ -111,7 +111,7 @@ import org.vmmagic.pragma.*;
    * Otherwise, a copy is created and returned.
    * In either case, the object will be marked on return.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be forwarded.
    * @return The forwarded object.
    */
@@ -129,7 +129,7 @@ import org.vmmagic.pragma.*;
    * Otherwise, a copy is created and returned.
    * In either case, the object will be marked on return.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be forwarded.
    * @return The forwarded object.
    */
@@ -158,7 +158,7 @@ import org.vmmagic.pragma.*;
    * Otherwise, a copy is created and returned.
    * In either case, the object will be marked on return.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be forwarded.
    * @return The forwarded object.
    */

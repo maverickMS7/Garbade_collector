@@ -23,7 +23,7 @@ import org.vmmagic.unboxed.*;
    * Delegated scanning of a object, processing each pointer field
    * encountered.
    *
-   * @param trace the trace to use for scanning
+   * @param msTrace the msTrace to use for scanning
    * @param object The object to be scanned.
    */
   public abstract void scanObject(TransitiveClosure trace, ObjectReference object);
@@ -33,7 +33,7 @@ import org.vmmagic.unboxed.*;
    * explicitly through Plan and PlanConstraints.
    *
    * @param id The specialized method id
-   * @param trace The trace the method has been specialized for
+   * @param msTrace The msTrace the method has been specialized for
    * @param object The object to be scanned
    */
   public abstract void specializedScanObject(int id, TransitiveClosure trace, ObjectReference object);
@@ -69,7 +69,7 @@ import org.vmmagic.unboxed.*;
    * balancing parallel GC can share the work of scanning threads.
    * </ul>
    *
-   * @param trace The trace to use for computing roots.
+   * @param msTrace The msTrace to use for computing roots.
    */
   public abstract void computeStaticRoots(TraceLocal trace);
 
@@ -86,7 +86,7 @@ import org.vmmagic.unboxed.*;
    * balancing parallel GC can share the work of scanning threads.
    * </ul>
    *
-   * @param trace The trace to use for computing roots.
+   * @param msTrace The msTrace to use for computing roots.
    */
   public abstract void computeGlobalRoots(TraceLocal trace);
 
@@ -106,7 +106,7 @@ import org.vmmagic.unboxed.*;
    * balancing parallel GC can share the work of scanning threads.
    * </ul>
    *
-   * @param trace The trace to use for computing roots.
+   * @param msTrace The msTrace to use for computing roots.
    */
   public abstract void computeThreadRoots(TraceLocal trace);
 
@@ -128,7 +128,7 @@ import org.vmmagic.unboxed.*;
    * balancing parallel GC can share the work of scanning threads.
    * </ul>
    *
-   * @param trace The trace to use for computing roots.
+   * @param msTrace The msTrace to use for computing roots.
    */
   public abstract void computeNewThreadRoots(TraceLocal trace);
 
@@ -142,7 +142,7 @@ import org.vmmagic.unboxed.*;
    * is used to establish the root set out of the scannable space in the case where
    * such a space exists.
    *
-   * @param trace The trace object to use to report root locations.
+   * @param msTrace The msTrace object to use to report root locations.
    */
   public abstract void computeBootImageRoots(TraceLocal trace);
 

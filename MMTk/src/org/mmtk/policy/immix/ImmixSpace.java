@@ -401,7 +401,7 @@ public final class ImmixSpace extends Space {
    * Trace a reference to an object.  If the object header is not already
    * marked, mark the object and enqueue it for subsequent processing.
    *
-   * @param trace The trace performing the transitive closure
+   * @param msTrace The msTrace performing the transitive closure
    * @param object The object to be traced.
    * @param allocator The allocator to which any copying should be directed
    * @return The object, which may have been moved.
@@ -427,10 +427,10 @@ public final class ImmixSpace extends Space {
    * Trace a reference to an object in the context of a non-moving collection.  This
    * call is optimized for the simpler non-moving case.
    *
-   * @param trace The trace performing the transitive closure
+   * @param msTrace The msTrace performing the transitive closure
    * @param object The object to be traced.
    * @return The object (there is no object forwarding in this
-   * trace method, so we always return the same object: this could be a
+   * msTrace method, so we always return the same object: this could be a
    * void method but for compliance to a more general interface).
    */
   @Inline
@@ -446,7 +446,7 @@ public final class ImmixSpace extends Space {
    * is not already marked, mark the object and enqueue it for subsequent
    * processing.
    *
-   * @param trace The trace performing the transitive closure
+   * @param msTrace The msTrace performing the transitive closure
    * @param object The object to be traced.
    * @param allocator The allocator to which any copying should be directed
    * @return Either the object or a forwarded object, depending on
@@ -466,9 +466,9 @@ public final class ImmixSpace extends Space {
   /**
    * Trace a reference to an object.  This interface is not supported by immix, since
    * we require the allocator to be identified except for the special case of the fast
-   * trace.
+   * msTrace.
    *
-   * @param trace The trace performing the transitive closure
+   * @param msTrace The msTrace performing the transitive closure
    * @param object The object to be traced.
    * @return null and fail.
    */
@@ -482,7 +482,7 @@ public final class ImmixSpace extends Space {
    * Trace a reference to an object in the context of a non-moving collection.  This
    * call is optimized for the simpler non-moving case.
    *
-   * @param trace The trace performing the transitive closure
+   * @param msTrace The msTrace performing the transitive closure
    * @param object The object to be traced.
    */
   @Inline
@@ -504,7 +504,7 @@ public final class ImmixSpace extends Space {
    * If the object is not already marked, mark the object and enqueue it
    * for subsequent processing.
    *
-   * @param trace The trace performing the transitive closure
+   * @param msTrace The msTrace performing the transitive closure
    * @param object The object to be traced.
    * @param allocator The allocator to which any copying should be directed
    * @param nurseryCollection whether the current collection is a nursery collection
@@ -586,7 +586,7 @@ public final class ImmixSpace extends Space {
    * above tracing code because line marks are stored separately from the
    * object headers (thus both must be set), and also because we found empirically
    * that it was more efficient to perform the line mark of the object during
-   * the scan phase (which occurs after the trace phase), presumably because
+   * the scan phase (which occurs after the msTrace phase), presumably because
    * the latency of the associated memory operations was better hidden in the
    * context of that code
    *

@@ -30,7 +30,7 @@ public abstract class FinalizableProcessor {
   /**
    * Scan through the list of references.
    *
-   * @param trace the thread local trace element.
+   * @param msTrace the thread local msTrace element.
    * @param nursery {@code true} if it is safe to only scan new references.
    */
   public abstract void scan(TraceLocal trace, boolean nursery);
@@ -38,7 +38,7 @@ public abstract class FinalizableProcessor {
   /**
    * Iterates over and forward entries in the table.
    *
-   * @param trace the trace to use for the processing of the references
+   * @param msTrace the msTrace to use for the processing of the references
    * @param nursery if {@code true}, scan only references generated since
    *  last scan. Otherwise, scan all references.
    */

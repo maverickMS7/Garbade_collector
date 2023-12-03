@@ -49,7 +49,7 @@ public abstract class GenMatureTraceLocal extends TraceLocal {
   /**
    *
    * @param specializedScan the id of the specialized scan
-   * @param trace the global trace class to use
+   * @param msTrace the global msTrace class to use
    * @param plan the state of the generational collector
    */
   public GenMatureTraceLocal(int specializedScan, Trace trace, GenCollector plan) {
@@ -60,7 +60,7 @@ public abstract class GenMatureTraceLocal extends TraceLocal {
   }
 
   /**
-   * @param trace the global trace class to use
+   * @param msTrace the global msTrace class to use
    * @param plan the state of the generational collector
    */
   public GenMatureTraceLocal(Trace trace, GenCollector plan) {

@@ -60,7 +60,7 @@ import org.vmmagic.unboxed.Offset;
   protected int totalRoots           = 0;
   protected int totalRefFromImmortal = 0;
 
-  private final LinearScan scanner;          // A scanner to trace objects
+  private final LinearScan scanner;          // A scanner to msTrace objects
 
   // Debugging
   protected Address lastAddress = Address.zero();

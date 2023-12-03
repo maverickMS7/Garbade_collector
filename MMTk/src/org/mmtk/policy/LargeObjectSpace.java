@@ -160,7 +160,7 @@ public final class LargeObjectSpace extends BaseLargeObjectSpace {
    * marked as (an atomic) side-effect of checking whether already
    * marked.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be traced.
    * @return The object (there is no object forwarding in this
    * collector, so we always return the same object: this could be a

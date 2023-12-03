@@ -26,7 +26,7 @@ import org.vmmagic.unboxed.*;
  * This abstract class and its global counterpart implement the core
  * functionality for a transitive closure over the heap graph. This class
  * specifically implements the unsynchronized thread-local component
- * (ie the 'fast path') of the trace mechanism.
+ * (ie the 'fast path') of the msTrace mechanism.
  *
  * @see org.mmtk.plan.Plan
  * @see org.mmtk.plan.Trace
@@ -51,7 +51,7 @@ public abstract class TraceLocal extends TransitiveClosure {
   /**
    * Constructor
    *
-   * @param trace The global trace class to use.
+   * @param msTrace The global msTrace class to use.
    */
   public TraceLocal(Trace trace) {
     this(-1, trace);
@@ -61,7 +61,7 @@ public abstract class TraceLocal extends TransitiveClosure {
    * Constructor
    *
    * @param specializedScan The specialized scan id.
-   * @param trace The global trace class to use.
+   * @param msTrace The global msTrace class to use.
    */
   public TraceLocal(int specializedScan, Trace trace) {
     super(specializedScan);
@@ -84,7 +84,7 @@ public abstract class TraceLocal extends TransitiveClosure {
   /**
    * Trace a reference during GC.  This involves determining which
    * collection policy applies and calling the appropriate
-   * <code>trace</code> method.
+   * <code>msTrace</code> method.
    *
    * @param source The source of the reference.
    * @param slot The location containing the object reference to be
@@ -118,7 +118,7 @@ public abstract class TraceLocal extends TransitiveClosure {
   /**
    * Trace a reference during GC.  This involves determining which
    * collection policy applies and calling the appropriate
-   * <code>trace</code> method.
+   * <code>msTrace</code> method.
    *
    * @param slot The location containing the object reference to be
    * traced.  The object reference is <i>NOT</i> an interior pointer.
@@ -139,7 +139,7 @@ public abstract class TraceLocal extends TransitiveClosure {
   /**
    * Trace a reference during GC.  This involves determining which
    * collection policy applies and calling the appropriate
-   * <code>trace</code> method.
+   * <code>msTrace</code> method.
    *
    * @param target The object the interior edge points within.
    * @param slot The location of the interior edge.
@@ -257,7 +257,7 @@ public abstract class TraceLocal extends TransitiveClosure {
   }
 
   /**
-   * This method is the core method during the trace of the object graph.
+   * This method is the core method during the msTrace of the object graph.
    * The role of this method is to:
    *
    * <ol>
@@ -311,7 +311,7 @@ public abstract class TraceLocal extends TransitiveClosure {
    * if necessary.
    *
    * <i>Non-copying collectors do nothing, copying collectors must
-   * override this method in each of their trace classes.</i>
+   * override this method in each of their msTrace classes.</i>
    *
    * @param object The object that must not move during the collection.
    * @return {@code true} If the object will not move during collection

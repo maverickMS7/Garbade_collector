@@ -12,7 +12,10 @@
  */
 
 /**
- * Provides a collector with deferred reference counting and a backup msTrace
- * to collect cycles.
+ * Provides a memory management implementation that can allocate but not collect.<p>
+ *
+ * A VM built with this collector will crash when all available memory has been exhausted.
+ * It will also crash when a collection is triggered via {@link java.lang.System#gc()} (or
+ * equivalent).
  */
-package org.mmtk.plan.refcount;
+package org.mmtk.plan.tutorial;

@@ -161,7 +161,7 @@ import org.vmmagic.pragma.*;
    * If the object is already forwarded, the copy is returned.
    * Otherwise, the object is forwarded and the copy is returned.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be forwarded.
    * @return The forwarded object.
    */
@@ -182,7 +182,7 @@ import org.vmmagic.pragma.*;
    * If the object is already forwarded, the copy is returned.
    * Otherwise, the object is forwarded and the copy is returned.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be forwarded.
    * @param allocator The allocator to use when copying.
    * @return The forwarded object.

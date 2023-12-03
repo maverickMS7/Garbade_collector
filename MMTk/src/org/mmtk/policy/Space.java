@@ -734,8 +734,8 @@ public abstract class Space {
    * Trace an object as part of a collection and return the object,
    * which may have been forwarded (if a copying collector).
    *
-   * @param trace The trace being conducted.
-   * @param object The object to trace
+   * @param msTrace The msTrace being conducted.
+   * @param object The object to msTrace
    * @return The object, forwarded, if appropriate
    */
   public abstract ObjectReference traceObject(TransitiveClosure trace, ObjectReference object);

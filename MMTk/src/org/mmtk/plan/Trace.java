@@ -64,7 +64,7 @@ public class Trace {
   }
 
   /**
-   * @return whether there is any work outstanding in this trace.
+   * @return whether there is any work outstanding in this msTrace.
    *  That is are there any pages in the pools.
    */
   public boolean hasWork() {

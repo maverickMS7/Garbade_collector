@@ -29,7 +29,7 @@ import org.vmmagic.pragma.*;
 public final class GenMSMatureTraceLocal extends GenMatureTraceLocal{
 
   /**
-   * @param global the global trace class to use
+   * @param global the global msTrace class to use
    * @param plan the state of the generational collector
    */
   public GenMSMatureTraceLocal(Trace global, GenCollector plan) {

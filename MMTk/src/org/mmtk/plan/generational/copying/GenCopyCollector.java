@@ -53,7 +53,7 @@ public class GenCopyCollector extends GenCollector {
   /** The allocator for the mature space */
   private final CopyLocal mature;
 
-  /** The trace object for full-heap collections */
+  /** The msTrace object for full-heap collections */
   private final GenCopyMatureTraceLocal matureTrace;
 
   /****************************************************************************

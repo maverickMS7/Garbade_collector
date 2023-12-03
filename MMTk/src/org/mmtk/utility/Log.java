@@ -20,7 +20,7 @@ import org.vmmagic.unboxed.*;
 import org.vmmagic.pragma.*;
 
 /**
- * Error and trace logging.
+ * Error and msTrace logging.
  */
 @Uninterruptible
 public class Log {

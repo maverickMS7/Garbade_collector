@@ -30,7 +30,7 @@ import org.vmmagic.unboxed.*;
  *
  * The implementation is intended to be as efficient as possible, in
  * time and space, and is the basis for the <code>TraceBuffer</code> used by
- * heap trace generation. Each instance adds a single field to those inherited
+ * heap msTrace generation. Each instance adds a single field to those inherited
  * from the SSB: a bump pointer.
  *
  * Preconditions: Buffers are always aligned on buffer-size address

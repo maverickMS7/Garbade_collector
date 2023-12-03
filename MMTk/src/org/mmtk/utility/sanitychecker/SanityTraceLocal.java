@@ -47,7 +47,7 @@ public final class SanityTraceLocal extends TraceLocal {
   }
 
   /**
-   * Will this object move from this point on, during the current trace?
+   * Will this object move from this point on, during the current msTrace?
    *
    * @param object The object to query.
    * @return {@code true} if the object will not move.

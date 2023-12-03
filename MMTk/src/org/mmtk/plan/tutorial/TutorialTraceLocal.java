@@ -10,7 +10,7 @@
  *  See the COPYRIGHT.txt file distributed with this work for information
  *  regarding copyright ownership.
  */
-package org.mmtk.plan.semispace;
+package org.mmtk.plan.tutorial;
 
 import org.mmtk.plan.TraceLocal;
 import org.mmtk.plan.Trace;
@@ -20,25 +20,21 @@ import org.vmmagic.pragma.*;
 import org.vmmagic.unboxed.*;
 
 /**
- * This class implements the core functionality for a transitive
+ * This class implements the thread-local core functionality for a transitive
  * closure over the heap graph.
  */
 @Uninterruptible
-public class SSTraceLocal extends TraceLocal {
-
-  public SSTraceLocal(Trace trace, boolean specialized) {
-    super(specialized ? SS.SCAN_SS : -1, trace);
-  }
+public final class TutorialTraceLocal extends TraceLocal {
 
   /**
    * @param msTrace the associated global msTrace
    */
-  public SSTraceLocal(Trace trace) {
-    this(trace, true);
+  public TutorialTraceLocal(Trace trace) {
+    super(Tutorial.SCAN_MARK,trace);
   }
 
+
   /****************************************************************************
-   *
    * Externally visible Object processing and tracing
    */
 
@@ -48,34 +44,18 @@ public class SSTraceLocal extends TraceLocal {
   @Override
   public boolean isLive(ObjectReference object) {
     if (object.isNull()) return false;
-    if (Space.isInSpace(SS.SS0, object))
-      return SS.hi ? SS.copySpace0.isLive(object) : true;
-    if (Space.isInSpace(SS.SS1, object))
-      return SS.hi ? true : SS.copySpace1.isLive(object);
+    if (Space.isInSpace(Tutorial.MARK_SWEEP, object)) {
+      return Tutorial.msSpace.isLive(object);
+    }
     return super.isLive(object);
   }
 
-
-  @Override
   @Inline
+  @Override
   public ObjectReference traceObject(ObjectReference object) {
     if (object.isNull()) return object;
-    if (Space.isInSpace(SS.SS0, object))
-      return SS.copySpace0.traceObject(this, object, SS.ALLOC_SS);
-    if (Space.isInSpace(SS.SS1, object))
-      return SS.copySpace1.traceObject(this, object, SS.ALLOC_SS);
+    if (Space.isInSpace(Tutorial.MARK_SWEEP, object))
+      return Tutorial.msSpace.traceObject(this, object);
     return super.traceObject(object);
-  }
-
-  /**
-   * Will this object move from this point on, during the current msTrace ?
-   *
-   * @param object The object to query.
-   * @return True if the object will not move.
-   */
-  @Override
-  public boolean willNotMoveInCurrentCollection(ObjectReference object) {
-    return (SS.hi && !Space.isInSpace(SS.SS0, object)) ||
-           (!SS.hi && !Space.isInSpace(SS.SS1, object));
   }
 }

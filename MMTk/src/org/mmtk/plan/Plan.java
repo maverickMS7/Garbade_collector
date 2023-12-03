@@ -95,7 +95,7 @@ public abstract class Plan {
   public static final boolean GATHER_WRITE_BARRIER_STATS = false;
   public static final int DEFAULT_MIN_NURSERY =  (2 << 20) >> LOG_BYTES_IN_PAGE;
   public static final int DEFAULT_MAX_NURSERY = (32 << 20) >> LOG_BYTES_IN_PAGE;
-  public static final boolean SCAN_BOOT_IMAGE = true;  // scan it for roots rather than trace it
+  public static final boolean SCAN_BOOT_IMAGE = true;  // scan it for roots rather than msTrace it
  // public static final boolean REQUIRES_LOS = VM.activePlan.constraints().requiresLOS();
   public static final int MAX_NON_LOS_DEFAULT_ALLOC_BYTES = VM.activePlan.constraints().maxNonLOSDefaultAllocBytes();
   public static final int MAX_NON_LOS_NONMOVING_ALLOC_BYTES = VM.activePlan.constraints().maxNonLOSNonMovingAllocBytes();

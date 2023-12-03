@@ -10,7 +10,7 @@
  *  See the COPYRIGHT.txt file distributed with this work for information
  *  regarding copyright ownership.
  */
-package org.mmtk.plan.nogc;
+package org.mmtk.plan.tutorial;
 
 import org.mmtk.plan.*;
 
@@ -32,7 +32,7 @@ import org.vmmagic.pragma.*;
  * @see CollectorContext
  */
 @Uninterruptible
-public class NoGCCollector extends ParallelCollector {
+public class TutorialCollector extends ParallelCollector {
 
   /************************************************************************
    * Instance fields
@@ -41,7 +41,7 @@ public class NoGCCollector extends ParallelCollector {
   /**
    *
    */
-  private final NoGCTraceLocal trace = new NoGCTraceLocal(global().trace);
+  private final TutorialTraceLocal trace = new TutorialTraceLocal(global().msTrace);
   protected final TraceLocal currentTrace = trace;
 
 
@@ -81,8 +81,8 @@ public class NoGCCollector extends ParallelCollector {
 
   /** @return The active global plan as a <code>Tutorial</code> instance. */
   @Inline
-  private static NoGC global() {
-    return (NoGC) VM.activePlan.global();
+  private static Tutorial global() {
+    return (Tutorial) VM.activePlan.global();
   }
 
   @Override

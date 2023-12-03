@@ -134,11 +134,11 @@ public final class SanityDataTable extends SimpleHashtable {
   }
 
   /**
-   * Forward data table using the supplied trace. Note that the data is
+   * Forward data table using the supplied msTrace. Note that the data is
    * not hashed correctly, so only enumeration can be used without
    * rehashing.
    *
-   * @param trace The trace to use.
+   * @param msTrace The msTrace to use.
    */
   public void forwardTable(TraceLocal trace) {
     Address entry = getFirst();

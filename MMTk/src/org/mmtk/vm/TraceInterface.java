@@ -52,7 +52,7 @@ import org.vmmagic.pragma.*;
   /**
    * This skips over the frames added by the tracing algorithm, outputs
    * information identifying the method the containts the "new" call triggering
-   * the allocation, and returns the address of the first non-trace, non-alloc
+   * the allocation, and returns the address of the first non-msTrace, non-alloc
    * stack frame.
    *
    *@param typeRef The type reference (tib) of the object just allocated

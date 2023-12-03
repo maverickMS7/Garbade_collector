@@ -10,7 +10,7 @@
  *  See the COPYRIGHT.txt file distributed with this work for information
  *  regarding copyright ownership.
  */
-package org.mmtk.plan.nogc;
+package org.mmtk.plan.tutorial;
 
 import org.mmtk.plan.MutatorContext;
 import org.mmtk.policy.ImmortalLocal;
@@ -37,7 +37,7 @@ import org.vmmagic.unboxed.*;
  * @see org.mmtk.plan.MutatorContext
  */
 @Uninterruptible
-public class NoGCMutator extends MutatorContext {
+public class TutorialMutator extends MutatorContext {
 
   /************************************************************************
    * Instance fields
@@ -46,7 +46,7 @@ public class NoGCMutator extends MutatorContext {
   /**
    *
    */
-  private final ImmortalLocal nogc = new ImmortalLocal(NoGC.noGCSpace);
+  private final ImmortalLocal nogc = new ImmortalLocal(Tutorial.msSpace);
 
 
   /****************************************************************************
@@ -59,7 +59,7 @@ public class NoGCMutator extends MutatorContext {
   @Inline
   @Override
   public Address alloc(int bytes, int align, int offset, int allocator, int site) {
-    if (allocator == NoGC.ALLOC_DEFAULT) {
+    if (allocator == Tutorial.ALLOC_DEFAULT) {
       return nogc.alloc(bytes, align, offset);
     }
     return super.alloc(bytes, align, offset, allocator, site);
@@ -69,14 +69,14 @@ public class NoGCMutator extends MutatorContext {
   @Override
   public void postAlloc(ObjectReference ref, ObjectReference typeRef,
       int bytes, int allocator) {
-    if (allocator != NoGC.ALLOC_DEFAULT) {
+    if (allocator != Tutorial.ALLOC_DEFAULT) {
       super.postAlloc(ref, typeRef, bytes, allocator);
     }
   }
 
   @Override
   public Allocator getAllocatorFromSpace(Space space) {
-    if (space == NoGC.noGCSpace) return nogc;
+    if (space == Tutorial.msSpace) return nogc;
     return super.getAllocatorFromSpace(space);
   }
 

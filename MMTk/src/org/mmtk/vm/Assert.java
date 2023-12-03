@@ -42,7 +42,7 @@ import org.vmmagic.pragma.Uninterruptible;
   public abstract void _assert(boolean cond, String message);
 
   /**
-   * Print a stack trace
+   * Print a stack msTrace
    */
   public abstract void dumpStack();
 

@@ -40,7 +40,7 @@ public final class ImmixDefragTraceLocal extends TraceLocal {
 
  /**
    * Constructor
-   * @param trace the associated global trace
+   * @param msTrace the associated global msTrace
    * @param modBuffer TODO
    */
   public ImmixDefragTraceLocal(Trace trace, ObjectReferenceDeque modBuffer) {

@@ -69,7 +69,7 @@ public class GenImmix extends Gen {
    * Instance fields
    */
 
-  /** The trace class for a full-heap collection */
+  /** The msTrace class for a full-heap collection */
   public final Trace matureTrace = new Trace(metaDataSpace);
   private boolean lastGCWasDefrag = false;
 

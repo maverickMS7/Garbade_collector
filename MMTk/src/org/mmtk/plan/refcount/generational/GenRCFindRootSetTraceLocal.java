@@ -53,7 +53,7 @@ public final class GenRCFindRootSetTraceLocal extends TraceLocal {
   }
 
   /**
-   * When we trace a non-root object we do nothing.
+   * When we msTrace a non-root object we do nothing.
    */
   @Override
   @Inline
@@ -62,7 +62,7 @@ public final class GenRCFindRootSetTraceLocal extends TraceLocal {
   }
 
   /**
-   * When we trace a root object we remember it.
+   * When we msTrace a root object we remember it.
    */
   @Override
   @Inline

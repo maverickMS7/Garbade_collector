@@ -32,7 +32,7 @@ import org.vmmagic.unboxed.*;
 public final class GenCopyMatureTraceLocal extends GenMatureTraceLocal {
 
   /**
-   * @param global the global trace class to use
+   * @param global the global msTrace class to use
    * @param plan the state of the generational collector
    */
   public GenCopyMatureTraceLocal(Trace global, GenCollector plan) {

@@ -104,10 +104,10 @@ import org.vmmagic.unboxed.ObjectReference;
    * Instance variables
    */
 
-  /** This trace sets the mark bit in live objects */
+  /** This msTrace sets the mark bit in live objects */
   public final Trace markTrace;
 
-  /** This trace updates pointers with the forwarded references */
+  /** This msTrace updates pointers with the forwarded references */
   public final Trace forwardTrace;
 
   /**

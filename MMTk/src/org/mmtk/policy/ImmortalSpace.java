@@ -28,7 +28,7 @@ import org.vmmagic.pragma.*;
 /**
  * This class implements tracing for a simple immortal collection
  * policy.  Under this policy all that is required is for the
- * "collector" to propagate marks in a liveness trace.  It does not
+ * "collector" to propagate marks in a liveness msTrace.  It does not
  * actually collect.  This class does not hold any state, all methods
  * are static.
  */
@@ -139,7 +139,7 @@ import org.vmmagic.pragma.*;
    * for subsequent processing. The object is marked as (an atomic)
    * side-effect of checking whether already marked.
    *
-   * @param trace The trace being conducted.
+   * @param msTrace The msTrace being conducted.
    * @param object The object to be traced.
    */
   @Override

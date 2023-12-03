@@ -64,7 +64,7 @@ public abstract class TransitiveClosure {
   /**
    * Constructor
    *
-   * @param specializedScan The specialized scan for this trace.
+   * @param specializedScan The specialized scan for this msTrace.
    */
   protected TransitiveClosure(int specializedScan) {
     this.specializedScan = specializedScan;

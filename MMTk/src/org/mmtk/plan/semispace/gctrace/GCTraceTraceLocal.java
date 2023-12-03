@@ -22,10 +22,10 @@ import org.vmmagic.pragma.*;
 
 /**
  * This plan has been modified slightly to perform the processing necessary
- * for GC trace generation.  To maximize performance, it attempts to remain
+ * for GC msTrace generation.  To maximize performance, it attempts to remain
  * as faithful as possible to semiSpace/Plan.java.
  * <pre>
- * The generated trace format is as follows:
+ * The generated msTrace format is as follows:
  *    B 345678 12
  *      (Object 345678 was created in the boot image with a size of 12 bytes)
  *    U 59843 234 47298
@@ -79,7 +79,7 @@ public final class GCTraceTraceLocal extends SSTraceLocal {
   /**
    * Constructor
    *
-   * @param trace The global trace to use.
+   * @param msTrace The global msTrace to use.
    */
   public GCTraceTraceLocal(Trace trace) {
     super(trace, false);
@@ -92,7 +92,7 @@ public final class GCTraceTraceLocal extends SSTraceLocal {
 
   /**
    * Trace a reference during GC.  This involves determining which
-   * collection policy applies (such as those needed for trace generation)
+   * collection policy applies (such as those needed for msTrace generation)
    * and taking the appropriate actions.
    *
    * @param object The object reference to be traced.  In certain

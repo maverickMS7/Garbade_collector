@@ -43,7 +43,7 @@ public final class GenNurseryTraceLocal extends TraceLocal {
   private final AddressPairDeque arrayRemset;
 
   /**
-   * @param trace the global trace class to use
+   * @param msTrace the global msTrace class to use
    * @param plan the state of the generational collector
    */
   public GenNurseryTraceLocal(Trace trace, GenCollector plan) {
@@ -67,7 +67,7 @@ public final class GenNurseryTraceLocal extends TraceLocal {
     if (Gen.inNursery(object)) {
       return Gen.nurserySpace.isLive(object);
     }
-    /* During a nursery trace, all objects not in the nursery are considered alive */
+    /* During a nursery msTrace, all objects not in the nursery are considered alive */
     return true;
   }
 

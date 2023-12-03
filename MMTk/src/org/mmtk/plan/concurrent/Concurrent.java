@@ -47,7 +47,7 @@ public abstract class Concurrent extends Simple {
   /**
    * When we preempt a concurrent marking phase we must flush mutators and then continue the closure.
    */
-  protected static final short preemptConcurrentClosure = Phase.createComplex("preeempt-concurrent-trace", null,
+  protected static final short preemptConcurrentClosure = Phase.createComplex("preeempt-concurrent-msTrace", null,
       Phase.scheduleMutator  (FLUSH_MUTATOR),
       Phase.scheduleCollector(CLOSURE));
 

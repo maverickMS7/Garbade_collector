@@ -40,8 +40,8 @@ public final class ImmixTraceLocal extends TraceLocal {
   /**
    * Constructor
    *
-   * @param trace The trace associated with this trace local.
-   * @param modBuffer The modified objects buffer associated with this trace local.  Possibly null.
+   * @param msTrace The msTrace associated with this msTrace local.
+   * @param modBuffer The modified objects buffer associated with this msTrace local.  Possibly null.
    */
   public ImmixTraceLocal(Trace trace, ObjectReferenceDeque modBuffer) {
     super(Immix.SCAN_IMMIX, trace);

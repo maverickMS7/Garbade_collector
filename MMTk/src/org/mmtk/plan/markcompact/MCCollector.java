@@ -25,7 +25,7 @@ import org.vmmagic.pragma.*;
  * mark-compact collector.<p>
  *
  * Specifically, this class defines <i>MC</i> collection behavior
- * (through <code>trace</code> and the <code>collectionPhase</code>
+ * (through <code>msTrace</code> and the <code>collectionPhase</code>
  * method), and collection-time allocation.<p>
  *
  * @see MC for an overview of the mark-compact algorithm

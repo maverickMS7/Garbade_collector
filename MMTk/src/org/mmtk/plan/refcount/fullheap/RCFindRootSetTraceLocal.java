@@ -52,7 +52,7 @@ public final class RCFindRootSetTraceLocal extends TraceLocal {
   }
 
   /**
-   * When we trace a non-root object we do nothing.
+   * When we msTrace a non-root object we do nothing.
    *
    * @param object The object to be traced.
    * @return The new reference to the same object instance.
@@ -64,7 +64,7 @@ public final class RCFindRootSetTraceLocal extends TraceLocal {
   }
 
   /**
-   * When we trace a root object we remember it.
+   * When we msTrace a root object we remember it.
    *
    * @param object The object to be traced.
    * @return The new reference to the same object instance.

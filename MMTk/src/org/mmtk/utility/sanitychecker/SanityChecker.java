@@ -49,7 +49,7 @@ public final class SanityChecker {
   private final SanityDataTable sanityTable;
   private boolean preGCSanity;
 
-  /* Local, but we only run the check trace single-threaded. */
+  /* Local, but we only run the check msTrace single-threaded. */
   final SanityTraceLocal checkTraceLocal;
 
   /* Linear scanning */
@@ -103,10 +103,10 @@ public final class SanityChecker {
       // Clear data space
       sanityTable.acquireTable();
 
-      // Root trace
+      // Root msTrace
       rootTrace.prepareNonBlocking();
 
-      // Checking trace
+      // Checking msTrace
       checkTrace.prepareNonBlocking();
       checkTraceLocal.prepare();
       return true;
@@ -216,7 +216,7 @@ public final class SanityChecker {
    * incrementing counters and enqueuing if this is the first
    * visit to the object.
    *
-   * @param trace the trace to use for processing
+   * @param msTrace the msTrace to use for processing
    * @param object The object to mark.
    * @param root {@code true} If the object is a root.
    */

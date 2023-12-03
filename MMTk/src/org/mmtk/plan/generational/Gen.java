@@ -118,7 +118,7 @@ public abstract class Gen extends StopTheWorld {
   public boolean gcFullHeap = false;
   public boolean nextGCFullHeap = false;
 
-  /* The trace object */
+  /* The msTrace object */
   public final Trace nurseryTrace = new Trace(metaDataSpace);
 
   /**
@@ -385,7 +385,7 @@ public abstract class Gen extends StopTheWorld {
   protected abstract Space activeMatureSpace();
 
   /**
-   * @return {@code true} if we should trace the whole heap during collection. True if
+   * @return {@code true} if we should msTrace the whole heap during collection. True if
    *         we're ignoring remsets or if we're doing a full heap GC.
    */
   public final boolean traceFullHeap() {

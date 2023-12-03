@@ -26,7 +26,7 @@ import org.vmmagic.pragma.*;
  * sticky mark bits mark-sweep collector.<p>
  *
  * Specifically, this class defines <i>StickyMS</i> collection behavior
- * (through <code>trace</code> and the <code>collectionPhase</code>
+ * (through <code>msTrace</code> and the <code>collectionPhase</code>
  * method).<p>
  *
  * @see StickyMS for an overview of the algorithm.

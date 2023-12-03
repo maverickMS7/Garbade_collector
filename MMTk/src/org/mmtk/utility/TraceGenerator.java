@@ -56,9 +56,9 @@ import org.vmmagic.unboxed.*;
   private static final int ALLOCATORS = ALLOC_BOOT + 1;
 
   /* Fields for tracing */
-  private static SortTODSharedDeque tracePool; // Buffers to hold raw trace
+  private static SortTODSharedDeque tracePool; // Buffers to hold raw msTrace
   private static TraceBuffer trace;
-  private static boolean traceBusy; // If we are building the trace
+  private static boolean traceBusy; // If we are building the msTrace
   private static Word lastGC; // Last time GC was performed
   private static ObjectReferenceArray objectLinks; // Lists of active objs
 
@@ -81,11 +81,11 @@ import org.vmmagic.unboxed.*;
 
   /**
    * This is called at "build-time" and passes the necessary build image
-   * objects to the trace processor.
+   * objects to the msTrace processor.
    *
    * @param worklist_ The dequeue that serves as the worklist for
    * death time propagation
-   * @param trace_ The dequeue used to store and then output the trace
+   * @param trace_ The dequeue used to store and then output the msTrace
    */
   @Interruptible
   public static void init(SortTODSharedDeque worklist_,
@@ -105,7 +105,7 @@ import org.vmmagic.unboxed.*;
   /**
    * This is called immediately before Jikes terminates.  It will perform
    * any death time processing that the analysis requires and then output
-   * any remaining information in the trace buffer.
+   * any remaining information in the msTrace buffer.
    *
    * @param value The integer value for the reason Jikes is terminating
    */
@@ -146,7 +146,7 @@ import org.vmmagic.unboxed.*;
    */
 
   /**
-   * Add the information in the bootImage to the trace.  This should be
+   * Add the information in the bootImage to the msTrace.  This should be
    * called before any allocations and pointer updates have occurred.
    *
    * @param bootStart The address at which the bootimage starts
@@ -159,7 +159,7 @@ import org.vmmagic.unboxed.*;
     while (!trav.isNull()) {
       ObjectReference next = VM.traceInterface.getLink(trav);
       Word thisOID = VM.traceInterface.getOID(trav);
-      /* Add the boot image object to the trace. */
+      /* Add the boot image object to the msTrace. */
       trace.push(TRACE_BOOT_ALLOC);
       trace.push(thisOID);
       trace.push(nextOID.minus(thisOID).lsh(LOG_BYTES_IN_ADDRESS));
@@ -176,7 +176,7 @@ import org.vmmagic.unboxed.*;
 
   /**
    * Do any tracing work required at each a pointer store operation.  This
-   * will add the pointer store to the trace buffer and, when Merlin lifetime
+   * will add the pointer store to the msTrace buffer and, when Merlin lifetime
    * analysis is being used, performs the necessary timestamping.
    *
    * @param isScalar If this is a pointer store to a scalar object
@@ -189,7 +189,7 @@ import org.vmmagic.unboxed.*;
   public static void processPointerUpdate(boolean isScalar,
                                           ObjectReference src,
                                           Address slot, ObjectReference tgt) {
-    // The trace can be busy only if this is a pointer update as a result of
+    // The msTrace can be busy only if this is a pointer update as a result of
     // the garbage collection needed by tracing. For the moment, we will
     // not report these updates.
     if (!traceBusy) {
@@ -201,7 +201,7 @@ import org.vmmagic.unboxed.*;
       }
 
       traceBusy = true;
-      /* Add the pointer store to the trace */
+      /* Add the pointer store to the msTrace */
       Offset traceOffset = VM.traceInterface.adjustSlotOffset(isScalar, src, slot);
       if (isScalar)
         trace.push(TRACE_FIELD_SET);
@@ -219,8 +219,8 @@ import org.vmmagic.unboxed.*;
 
   /**
    * Do any tracing work required at each object allocation. This will add the
-   * object allocation to the trace buffer, triggers the necessary collection
-   * work at exact allocations, and output the data in the trace buffer.
+   * object allocation to the msTrace buffer, triggers the necessary collection
+   * work at exact allocations, and output the data in the msTrace buffer.
    *
    * @param isImmortal whether the allocation goes to an immortal space
    * @param ref The address of the object just allocated.
@@ -240,9 +240,9 @@ import org.vmmagic.unboxed.*;
     else {
       allocType = TRACE_ALLOC;
     }
-    /* Add the allocation into the trace. */
+    /* Add the allocation into the msTrace. */
     traceBusy = true;
-    /* When legally permissible, add the record to the trace buffer */
+    /* When legally permissible, add the record to the msTrace buffer */
     if (MERLIN_ANALYSIS) {
        Address fp = (TraceBuffer.OMIT_ALLOCS) ? Address.zero() : VM.traceInterface.skipOwnFramesAndDump(typeRef);
 
@@ -298,7 +298,7 @@ import org.vmmagic.unboxed.*;
    */
 
   /**
-   * This computes and adds to the trace buffer the unreachable time for
+   * This computes and adds to the msTrace buffer the unreachable time for
    * all of the objects that are _provably_ unreachable.  This method
    * should be called after garbage collection (but before the space has
    * been reclaimed) and at program termination.
@@ -344,7 +344,7 @@ import org.vmmagic.unboxed.*;
             deadTime = VM.traceInterface.getDeathTime(thisRef);
           else
             deadTime = lastGC;
-          /* Add the death record to the trace for unreachable objects. */
+          /* Add the death record to the msTrace for unreachable objects. */
           trace.push(TRACE_DEATH);
           trace.push(VM.traceInterface.getOID(thisRef));
           trace.push(deadTime);
@@ -359,7 +359,7 @@ import org.vmmagic.unboxed.*;
   /**
    * This method is called for each root-referenced object at every Merlin
    * root enumeration.  The method will update the death time of the parameter
-   * to the current trace time.
+   * to the current msTrace time.
    *
    * @param obj The root-referenced object
    */

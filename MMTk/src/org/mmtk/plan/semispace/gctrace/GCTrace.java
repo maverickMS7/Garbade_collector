@@ -26,10 +26,10 @@ import org.vmmagic.pragma.*;
 
 /**
  * This plan has been modified slightly to perform the processing necessary
- * for GC trace generation.  To maximize performance, it attempts to remain
+ * for GC msTrace generation.  To maximize performance, it attempts to remain
  * as faithful as possible to semiSpace/Plan.java.
  *
- * The generated trace format is as follows:
+ * The generated msTrace format is as follows:
  * <pre>
  *    B 345678 12
  *      (Object 345678 was created in the boot image with a size of 12 bytes)
@@ -90,12 +90,12 @@ import org.vmmagic.pragma.*;
   /**
    *
    */
-  public static final RawPageSpace traceSpace = new RawPageSpace("trace", VMRequest.discontiguous());
+  public static final RawPageSpace traceSpace = new RawPageSpace("msTrace", VMRequest.discontiguous());
   public static final int TRACE = traceSpace.getDescriptor();
 
   /* GC state */
   public static boolean lastGCWasTracing = false; // True when previous GC was for tracing
-  public static boolean traceInducedGC = false; // True if trace triggered GC
+  public static boolean traceInducedGC = false; // True if msTrace triggered GC
   public static boolean deathScan = false;
   public static boolean finalDead = false;
 
@@ -124,7 +124,7 @@ import org.vmmagic.pragma.*;
 
   /**
    * The planExit method is called at RVM termination to allow the
-   * trace process to finish.
+   * msTrace process to finish.
    */
   @Override
   @Interruptible
@@ -160,7 +160,7 @@ import org.vmmagic.pragma.*;
     }
     if (phaseId == RELEASE) {
       if (traceInducedGC) {
-        /* Clean up following a trace-induced scan */
+        /* Clean up following a msTrace-induced scan */
         deathScan = false;
       } else {
         /* Finish the collection by calculating the unreachable times */
@@ -188,7 +188,7 @@ import org.vmmagic.pragma.*;
    */
 
   /**
-   * @return Since trace induced collections are not called to free up memory,
+   * @return Since msTrace induced collections are not called to free up memory,
    *         their failure to return memory isn't cause for concern.
    */
   public boolean isLastGCFull() {

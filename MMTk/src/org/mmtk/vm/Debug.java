@@ -80,7 +80,7 @@ public abstract class Debug {
    *
    * *** Non-standard, requires plumbing into a collector during debugging ***
    *
-   * @param trace The trace being performed
+   * @param msTrace The msTrace being performed
    * @param object The object
    */
   public void traceObject(TraceLocal trace, ObjectReference object) { }
