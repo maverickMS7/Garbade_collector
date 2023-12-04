@@ -12,8 +12,9 @@
  */
 package org.mmtk.plan.tutorial;
 
-import org.mmtk.plan.PlanConstraints;
-
+import org.mmtk.plan.StopTheWorldConstraints;
+import org.mmtk.policy.MarkSweepSpace;
+import org.mmtk.policy.SegregatedFreeListSpace;
 import org.vmmagic.pragma.*;
 
 /**
@@ -23,13 +24,25 @@ import org.vmmagic.pragma.*;
  * issues with ordering of static initialization.
  */
 @Uninterruptible
-public class TutorialConstraints extends PlanConstraints {
+public class TutorialConstraints extends StopTheWorldConstraints {
   @Override
   public int gcHeaderBits() {
-    return 0;
+    return MarkSweepSpace.LOCAL_GC_BITS_REQUIRED;
   }
   @Override
   public int gcHeaderWords() {
-    return 0;
+    return MarkSweepSpace.GC_HEADER_WORDS_REQUIRED;
   }
+  
+  public int maxNonLOSDefaultAllocBytes() {
+	  return SegregatedFreeListSpace.MAX_FREELIST_OBJECT_BYTES;
+	  
+  }
+  public int maxNonLOSCopy() {
+	  return SegregatedFreeListSpace.MAX_FREELIST_OBJECT_BYTES;}
+  }
+  @Override 
+  public int numSpecializedScans() { return 1; }
+  @Override 
+  public boolean movesObjects() { return true; }
 }

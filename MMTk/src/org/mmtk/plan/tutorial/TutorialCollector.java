@@ -12,10 +12,13 @@
  */
 package org.mmtk.plan.tutorial;
 
-import org.mmtk.plan.*;
-
+import org.mmtk.plan.CollectorContext;
+import org.mmtk.plan.Plan;
+import org.mmtk.plan.StopTheWorldCollector;
+import org.mmtk.plan.TraceLocal;
+import org.mmtk.policy.LargeObjectLocal;
+import org.mmtk.policy.MarkSweepLocal;
 import org.mmtk.vm.VM;
-
 import org.vmmagic.pragma.*;
 
 /**
@@ -32,7 +35,7 @@ import org.vmmagic.pragma.*;
  * @see CollectorContext
  */
 @Uninterruptible
-public class TutorialCollector extends ParallelCollector {
+public class TutorialCollector extends StopTheWorldCollector {
 
   /************************************************************************
    * Instance fields
@@ -44,6 +47,9 @@ public class TutorialCollector extends ParallelCollector {
   private final TutorialTraceLocal trace = new TutorialTraceLocal(global().msTrace);
   protected final TraceLocal currentTrace = trace;
 
+  
+  private final LargeObjectLocal los = new LargeObjectLocal(Plan.loSpace); 
+  private final MarkSweepLocal mature = new MarkSweepLocal(Tutorial.msSpace);
 
   /****************************************************************************
    * Collection
@@ -52,15 +58,12 @@ public class TutorialCollector extends ParallelCollector {
   /**
    * Perform a garbage collection
    */
-  @Override
-  public final void collect() {
-    VM.assertions.fail("GC Triggered in Tutorial Plan. Is -X:gc:ignoreSystemGC=true ?");
-  }
+ 
 
   @Inline
   @Override
   public final void collectionPhase(short phaseId, boolean primary) {
-    VM.assertions.fail("GC Triggered in Tutorial Plan.");
+   /* VM.assertions.fail("GC Triggered in Tutorial Plan.");
     /*
     if (phaseId == Tutorial.PREPARE) {
     }
@@ -73,6 +76,21 @@ public class TutorialCollector extends ParallelCollector {
 
     super.collectionPhase(phaseId, primary);
     */
+	  if (phaseId == Tutorial.PREPARE) { 
+		  super.collectionPhase(phaseId, primary); 
+		  trace.prepare(); 
+		  return; 
+		}
+	  if (phaseId == Tutorial.CLOSURE) { 
+		  trace.completeTrace(); 
+		  return; 
+		}
+	  if (phaseId == Tutorial.RELEASE) { 
+		  trace.release(); 
+		  super.collectionPhase(phaseId, primary); 
+		  return; 
+		}	
+	  super.collectionPhase(phaseId, primary);
   }
 
   /****************************************************************************
@@ -88,5 +106,22 @@ public class TutorialCollector extends ParallelCollector {
   @Override
   public final TraceLocal getCurrentTrace() {
     return currentTrace;
+  }
+  
+  @Override 
+  public final Address allocCopy(ObjectReference original, int bytes, 
+                               int align, int offset, int allocator) { 
+    if (allocator == Plan.ALLOC_LOS) 
+     return los.alloc(bytes, align, offset); 
+    else 
+     return mature.alloc(bytes, align, offset); 
+  }
+  @Override 
+  public final void postCopy(ObjectReference object, ObjectReference typeRef, 
+                           int bytes, int allocator) { 
+  if (allocator == Plan.ALLOC_LOS) 
+    Plan.loSpace.initializeHeader(object, false); 
+  else 
+    Tutorial.msSpace.postCopy(object, true); 
   }
 }

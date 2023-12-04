@@ -128,6 +128,9 @@ public class PlanSpecificConfig {
     register(new PlanSpecific("org.mmtk.plan.tutorial.Tutorial")
     		.addExpectedSpaces("ms"),
     		"Tutorial");
+    register (new PlanSpecific("org.mmtk.plan.tutorial.Tutorial")
+    		.addExpectedSpaces("ms", "nursery"),
+    		"Tutorial");
   }
 
   /**

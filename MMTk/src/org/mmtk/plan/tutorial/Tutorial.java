@@ -12,89 +12,126 @@
  */
 package org.mmtk.plan.tutorial;
 
-import org.mmtk.plan.*;
-import org.mmtk.policy.ImmortalSpace;
+import org.mmtk.plan.StopTheWorld;
+import org.mmtk.plan.Trace;
+import org.mmtk.plan.TransitiveClosure;
+import org.mmtk.policy.CopySpace;
+import org.mmtk.policy.MarkSweepSpace;
+import org.mmtk.policy.Space;
 import org.mmtk.utility.heap.VMRequest;
-import org.mmtk.vm.VM;
-
 import org.vmmagic.pragma.*;
 
-
 /**
- * This class implements the global state of a a simple allocator
- * without a collector.
+ * This class implements the global state of a a simple allocator without a
+ * collector.
  */
 @Uninterruptible
-public class Tutorial extends Plan {
+public class Tutorial extends StopTheWorld {
 
-  /*****************************************************************************
-   * Class variables
-   */
+	/*****************************************************************************
+	 * Class variables
+	 */
 
-  /**
-   *
-   */
-  public static final ImmortalSpace msSpace = new ImmortalSpace("default", VMRequest.discontiguous());
-  public static final int MARK_SWEEP = msSpace.getDescriptor();
-
-
-  /*****************************************************************************
-   * Instance variables
-   */
-
-  /**
-   *
-   */
-  public final Trace trace = new Trace(metaDataSpace);
+	/**
+	 *
+	 */
+	public static final MarkSweepSpace msSpace = new MarkSweepSpace("ms", VMRequest.discontiguous());
+	public static final int MARK_SWEEP = msSpace.getDescriptor();
+	public static final int SCAN_MARK = 0;
+	
+	public static final CopySpace nurserySpace = new CopySpace("nursery", false, VMRequest.highFraction(0.15f)); 
+	public static final int NURSERY = nurserySpace.getDescriptor();
 
 
-  /*****************************************************************************
-   * Collection
-   */
+	/*****************************************************************************
+	 * Instance variables
+	 */
 
-  /**
-   * {@inheritDoc}
-   */
-  @Inline
-  @Override
-  public final void collectionPhase(short phaseId) {
-    if (VM.VERIFY_ASSERTIONS) VM.assertions._assert(false);
-    /*
-    if (phaseId == PREPARE) {
-    }
-    if (phaseId == CLOSURE) {
-    }
-    if (phaseId == RELEASE) {
-    }
-    super.collectionPhase(phaseId);
-    */
-  }
+	/**
+	 *
+	 */
+	public final Trace msTrace = new Trace(metaDataSpace);
 
-  /*****************************************************************************
-   * Accounting
-   */
+	/*****************************************************************************
+	 * Collection
+	 */
 
-  /**
-   * {@inheritDoc}
-   * The superclass accounts for its spaces, we just
-   * augment this with the default space's contribution.
-   */
-  @Override
-  public int getPagesUsed() {
-    return (msSpace.reservedPages() + super.getPagesUsed());
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Inline
+	@Override
+	public final void collectionPhase(short phaseId) {
+		/
 
+		if (phaseId == PREPARE) {
+			super.collectionPhase(phaseId);
+			nurserySpace.prepare(true);
+			msTrace.prepare();
+			msSpace.prepare(true);
+			return;
+		}
+		if (phaseId == CLOSURE) {
+			msTrace.prepare();
+			return;
 
-  /*****************************************************************************
-   * Miscellaneous
-   */
+		}
+		if (phaseId == RELEASE) {
+			msTrace.release();
+			msSpace.release();
+			super.collectionPhase(phaseId);
+			return;
+		}
+		super.collectionPhase(phaseId);
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Interruptible
-  @Override
-  protected void registerSpecializedMethods() {
-    super.registerSpecializedMethods();
-  }
+	/*****************************************************************************
+	 * Accounting
+	 */
+
+	/**
+	 * {@inheritDoc} The superclass accounts for its spaces, we just augment this
+	 * with the default space's contribution.
+	 
+	@Override
+	public int getPagesUsed() {
+		return (msSpace.reservedPages() + super.getPagesUsed());
+	}
+	*/
+	
+	@Override 
+	public int getPagesUsed() { 
+	  return super.getPagesUsed() + msSpace.reservedPages()+nurserySpace.reservedPages(); 
+	}
+
+	/*****************************************************************************
+	 * Miscellaneous
+	 */
+
+	/**
+	 * {@inheritDoc}
+	 */
+	@Interruptible
+	@Override
+	protected void registerSpecializedMethods() {
+		super.registerSpecializedMethods();
+		TransitiveClosure.registerSpecializedScan(SCAN_MARK, TutorialTraceLocal.class)
+	}
+	@Override 
+	public boolean willNeverMove(ObjectReference object) { 
+	  if (Space.isInSpace(MARK_SWEEP, object)) 
+	   return true; 
+	  return super.willNeverMove(object); 
+	}
+	@Override 
+	public int getCollectionReserve() {
+	
+	 return nurserySpace.reservedPages() + super.getCollectionReserve();
+	}
+	 
+	 @Override 
+	 public int   getPagesAvail() {
+		 return (getTotalPages() - getPagesReserved()) >> 1;
+	 }
+
 }

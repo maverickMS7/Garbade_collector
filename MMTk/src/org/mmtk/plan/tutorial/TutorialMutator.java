@@ -12,24 +12,24 @@
  */
 package org.mmtk.plan.tutorial;
 
-import org.mmtk.plan.MutatorContext;
-import org.mmtk.policy.ImmortalLocal;
+import org.mmtk.plan.StopTheWorldMutator;
+import org.mmtk.policy.CopyLocal;
+import org.mmtk.policy.MarkSweepLocal;
 import org.mmtk.policy.Space;
 import org.mmtk.utility.alloc.Allocator;
-import org.mmtk.vm.VM;
-
 import org.vmmagic.pragma.*;
 import org.vmmagic.unboxed.*;
 
 /**
- * This class implements <i>per-mutator thread</i> behavior and state
- * for the <i>Tutorial</i> plan, which simply allocates (without ever collecting
- * until the available space is exhausted.<p>
+ * This class implements <i>per-mutator thread</i> behavior and state for the
+ * <i>Tutorial</i> plan, which simply allocates (without ever collecting until
+ * the available space is exhausted.
+ * <p>
  *
  * Specifically, this class defines <i>Tutorial</i> mutator-time allocation
- * through a bump pointer (<code>def</code>) and includes stubs for
- * per-mutator thread collection semantics (since there is no collection
- * in this plan, these remain just stubs).
+ * through a bump pointer (<code>def</code>) and includes stubs for per-mutator
+ * thread collection semantics (since there is no collection in this plan, these
+ * remain just stubs).
  *
  * @see Tutorial
  * @see TutorialCollector
@@ -37,68 +37,80 @@ import org.vmmagic.unboxed.*;
  * @see org.mmtk.plan.MutatorContext
  */
 @Uninterruptible
-public class TutorialMutator extends MutatorContext {
+public class TutorialMutator extends StopTheWorldMutator {
 
-  /************************************************************************
-   * Instance fields
-   */
+	/************************************************************************
+	 * Instance fields
+	 */
 
-  /**
-   *
-   */
-  private final ImmortalLocal nogc = new ImmortalLocal(Tutorial.msSpace);
+	/**
+	 *
+	 */
+	private final MarkSweepLocal ms = new MarkSweepLocal(Tutorial.msSpace);
+	private final CopyLocal  nursery = new CopyLocal(Tutorial.nurserySpace);
 
+	/****************************************************************************
+	 * Mutator-time allocation
+	 */
 
-  /****************************************************************************
-   * Mutator-time allocation
-   */
+	/**
+	 * {@inheritDoc}
+	 */
+	@Inline
+	@Override
+	public Address alloc(int bytes, int align, int offset, int allocator, int site) {
+		if (allocator == Tutorial.ALLOC_DEFAULT) {
+			return nursery.alloc(bytes, align, offset);
+		}
+		return super.alloc(bytes, align, offset, allocator, site);
+	}
 
-  /**
-   * {@inheritDoc}
-   */
-  @Inline
-  @Override
-  public Address alloc(int bytes, int align, int offset, int allocator, int site) {
-    if (allocator == Tutorial.ALLOC_DEFAULT) {
-      return nogc.alloc(bytes, align, offset);
-    }
-    return super.alloc(bytes, align, offset, allocator, site);
-  }
+	@Inline
+	@Override
+	public void postAlloc(ObjectReference ref, ObjectReference typeRef, int bytes, int allocator) {
+		if (allocator != Tutorial.ALLOC_DEFAULT) {
 
-  @Inline
-  @Override
-  public void postAlloc(ObjectReference ref, ObjectReference typeRef,
-      int bytes, int allocator) {
-    if (allocator != Tutorial.ALLOC_DEFAULT) {
-      super.postAlloc(ref, typeRef, bytes, allocator);
-    }
-  }
+			
+		
+			super.postAlloc(ref, typeRef, bytes, allocator);
+		}
+	}
 
-  @Override
-  public Allocator getAllocatorFromSpace(Space space) {
-    if (space == Tutorial.msSpace) return nogc;
-    return super.getAllocatorFromSpace(space);
-  }
+	@Override
+	public Allocator getAllocatorFromSpace(Space space) {
+		if (space == Tutorial.nurserySpace)
+			return nursery;
+		return super.getAllocatorFromSpace(space);
+	}
 
+	/****************************************************************************
+	 * Collection
+	 */
 
-  /****************************************************************************
-   * Collection
-   */
-
-  /**
-   * {@inheritDoc}
-   */
-  @Inline
-  @Override
-  public final void collectionPhase(short phaseId, boolean primary) {
-    VM.assertions.fail("GC Triggered in Tutorial Plan.");
-    /*
-     if (phaseId == Tutorial.PREPARE) {
-     }
-
-     if (phaseId == Tutorial.RELEASE) {
-     }
-     super.collectionPhase(phaseId, primary);
-     */
-  }
+	/**
+	 * {@inheritDoc}
+	 */
+	@Inline
+	@Override
+	public final void collectionPhase(short phaseId, boolean primary) {
+		/*VM.assertions.fail("GC Triggered in Tutorial Plan.");
+		/*
+		 * if (phaseId == Tutorial.PREPARE) { }
+		 * 
+		 * if (phaseId == Tutorial.RELEASE) { } super.collectionPhase(phaseId, primary);
+		 */
+		if (phaseId == Tutorial.PREPARE) { 
+			  super.collectionPhase(phaseId, primary); 
+			  nursery.reset(); 
+			  return; 
+			}
+		if (phaseId == Tutorial.RELEASE) { 
+			  
+			  super.collectionPhase(phaseId, primary); 
+			  return; 
+			}
+		super.collectionPhase(phaseId, primary);
+		
+		
+	}
 }
